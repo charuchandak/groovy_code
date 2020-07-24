@@ -14,7 +14,7 @@ cp -rvf * /root/task6
      
         remoteShell('root@192.168.1.103:22') {
           command('''
-if kubectl get pvc | grep my-pvc
+if kubectl get pvc | grep myphp-pv-claim
 then
    echo "HTTPD PVC already created"
 else
