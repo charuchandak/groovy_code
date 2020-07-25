@@ -1,7 +1,7 @@
  job("Task6_Job1") {
 description ("Job to pull code from GitHub repository")
   scm{
-    github('https://github.com/charuchandak/task6_devops.git','master')
+    github('charuchandak/task6_devops','master')
   }
   triggers {
         scm ("* * * * *")
