@@ -1,5 +1,4 @@
-# DSL script for Job 1
-job("Task6_Job1") {
+ job("Task6_Job1") {
 description ("Job to pull code from GitHub repository")
   scm{
     github('https://github.com/charuchandak/task6_devops.git','master')
@@ -39,7 +38,7 @@ fi
  }
   
 }
-# DSL script for Job 2
+# DSL script for Job2
 job("Task6_Job2") {
 description ("Job to shift code into testing environment")
   triggers {
@@ -53,7 +52,7 @@ echo $html_pods
 kubectl cp /root/task6/index.html "$html_pods":/var/www/html
          ''')
     }
-	# DSL Script for Job 3
+	# DSL Script for Job3
 job("Task6_Job3") {
 description ("Testing the code")
   triggers {
