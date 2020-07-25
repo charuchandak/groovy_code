@@ -28,7 +28,6 @@ fi
        
  }
   
-}
 job("Task6_Job2") {
 description ("Job to shift code into testing environment")
   triggers {
@@ -41,6 +40,7 @@ echo $html_pods
 kubectl cp /root/task6/index.html "$html_pods":/var/www/html
          ''')
     }
+
 job("Task6_Job3") {
 description ("Testing the code")
   triggers {
@@ -60,6 +60,7 @@ fi
 ''')
           
      }
+
   
   publishers {
         extendedEmail {
@@ -91,3 +92,4 @@ buildPipelineView('Task6') {
      
    }
 }
+
