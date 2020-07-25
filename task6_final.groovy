@@ -82,8 +82,8 @@ fi
         }
     }
 }
-buildPipelineView('Task6') {
-    title('Task6')
+buildPipelineView('task6') {
+    title('task6')
     displayedBuilds(3)
     selectedJob('Task6_Job1')
     showPipelineParameters(true)
