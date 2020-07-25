@@ -12,6 +12,8 @@ sudo cp -rvf * /root/task6
 if kubectl get pvc | grep myphp-pv-claim
 then
    echo "HTTPD PVC already created"
+else
+   kubectl create -f /root/task6/pvc.yml
    if kubectl get deploy | grep php-deploy
       then
            echo "HTTPD Pods are running"
@@ -20,8 +22,6 @@ then
            kubectl create -f /root/task6/service.yml
            kubectl get svc
    fi
-else
-   kubectl create -f /root/task6/pvc.yml
 fi
 
 ''')
@@ -35,7 +35,7 @@ description ("Job to shift code into testing environment")
     }
    steps {
           shell('''
-html_pods=$(kubectl get pods -l 'app in (php-deploy)' -o jsonpath="{.items[0].metadata.name}")
+html_pods=$(kubectl get pods -l 'env in (php)' -o jsonpath="{.items[0].metadata.name}")
 echo $html_pods
 kubectl cp /root/task6/index.html "$html_pods":/var/www/html
          ''')
@@ -48,7 +48,7 @@ description ("Testing the code")
     }
    steps {
           shell('''
-status=$(curl -o /dev/null -sw "%{http_code}" http://192.168.99.103:30000)
+status=$(curl -o /dev/null -sw "%{http_code}" http://192.168.99.100:30000)
 if [ $status -eq 200 ]
 then
   echo "App running"
