@@ -9,32 +9,23 @@ description ("Job to pull code from GitHub repository")
    steps {
         shell('''
 sudo cp -rvf * /root/task6
-''')
-     
-        remoteShell('root@192.168.1.103:22') {
-          command('''
 if kubectl get pvc | grep myphp-pv-claim
 then
    echo "HTTPD PVC already created"
+   if kubectl get deploy | grep php-deploy
+      then
+           echo "HTTPD Pods are running"
+   else
+           kubectl create -f /root/task6/deploy.yml
+           kubectl create -f /root/task6/service.yml
+           kubectl get svc
+   fi
 else
    kubectl create -f /root/task6/pvc.yml
 fi
-         ''')
-     
-        remoteShell('root@192.168.1.103:22') {
-          command('''
-if kubectl get deploy | grep php-deploy
-then
-   echo "HTTPD Pods are running"
-else
-   kubectl create -f /root/task6/deploy.yml
-   kubectl create -f /root/task6/service.yml
-   kubectl get svc
-fi
-         ''')
-    }
-     
-   }
+
+''')
+       
  }
   
 }
@@ -44,8 +35,7 @@ description ("Job to shift code into testing environment")
         upstream('Task6_Job1', 'SUCCESS')
     }
    steps {
-        remoteShell('root@192.168.1.103:22') {
-          command('''
+          shell('''
 html_pods=$(kubectl get pods -l 'app in (php-deploy)' -o jsonpath="{.items[0].metadata.name}")
 echo $html_pods
 kubectl cp /root/task6/index.html "$html_pods":/var/www/html
@@ -57,8 +47,7 @@ description ("Testing the code")
         upstream('Task6_Job2', 'SUCCESS')
     }
    steps {
-        remoteShell('root@192.168.1.103:22') {
-          command('''
+          shell('''
 status=$(curl -o /dev/null -sw "%{http_code}" http://192.168.99.103:30001)
 if [ $status -eq 200 ]
 then
@@ -71,8 +60,6 @@ fi
 ''')
           
      }
-     
-   }
   
   publishers {
         extendedEmail {
