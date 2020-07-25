@@ -48,7 +48,7 @@ description ("Testing the code")
     }
    steps {
           shell('''
-status=$(curl -o /dev/null -sw "%{http_code}" http://192.168.99.103:30001)
+status=$(curl -o /dev/null -sw "%{http_code}" http://192.168.99.103:30000)
 if [ $status -eq 200 ]
 then
   echo "App running"
