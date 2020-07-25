@@ -8,7 +8,7 @@ description ("Job to pull code from GitHub repository")
     }
    steps {
         shell('''
-cp -rvf * /root/task6
+sudo cp -rvf * /root/task6
 ''')
      
         remoteShell('root@192.168.1.103:22') {
