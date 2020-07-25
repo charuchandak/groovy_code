@@ -38,7 +38,6 @@ fi
  }
   
 }
-# DSL script for Job2
 job("Task6_Job2") {
 description ("Job to shift code into testing environment")
   triggers {
@@ -52,7 +51,6 @@ echo $html_pods
 kubectl cp /root/task6/index.html "$html_pods":/var/www/html
          ''')
     }
-	# DSL Script for Job3
 job("Task6_Job3") {
 description ("Testing the code")
   triggers {
@@ -61,7 +59,7 @@ description ("Testing the code")
    steps {
         remoteShell('root@192.168.1.103:22') {
           command('''
-status=$(curl -o /dev/null -sw "%{http_code}" http://192.168.99.100:30909)
+status=$(curl -o /dev/null -sw "%{http_code}" http://192.168.99.103:30001)
 if [ $status -eq 200 ]
 then
   echo "App running"
@@ -96,7 +94,6 @@ fi
         }
     }
 }
-#DSL Script for Build Pipeline View(Requires Build Pipeline Plugin)
 buildPipelineView('Task6') {
     title('Task6')
     displayedBuilds(3)
