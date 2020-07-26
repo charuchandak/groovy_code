@@ -1,9 +1,10 @@
  job("Task6_Job1") {
 description ("Job to pull code from GitHub repository")
-  restrictToLabel('rhel')
+  
   scm{
     github('charuchandak/task6_devops','master')
   }
+  restrictToLabel('rhel')
   triggers {
         scm ("* * * * *")
     }
