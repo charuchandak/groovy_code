@@ -4,7 +4,6 @@ description ("Job to pull code from GitHub repository")
   scm{
     github('charuchandak/task6_devops','master')
   }
-  Label(String rhel)
   triggers {
         scm ("* * * * *")
     }
