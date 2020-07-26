@@ -4,7 +4,7 @@ description ("Job to pull code from GitHub repository")
   scm{
     github('charuchandak/task6_devops','master')
   }
-  restrictToLabel('rhel')
+  Label('rhel')
   triggers {
         scm ("* * * * *")
     }
@@ -32,7 +32,7 @@ fi
   
 job("Task6_Job2") {
 description ("Job to shift code into testing environment")
- restrictToLabel('rhel')
+ Label('rhel')
   triggers {
         upstream('Task6_Job1', 'SUCCESS')
     }
@@ -46,7 +46,7 @@ kubectl cp /root/task6/index.html "$html_pods":/var/www/html
 
 job("Task6_Job3") {
 description ("Testing the code")
- restrictToLabel('rhel')
+ Label('rhel')
   triggers {
         upstream('Task6_Job2', 'SUCCESS')
     }
